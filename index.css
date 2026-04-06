@@ -1,0 +1,433 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 150 10% 98%;
+    --foreground: 160 25% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 25% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 25% 10%;
+
+    --primary: 152 60% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 150 15% 94%;
+    --secondary-foreground: 160 25% 10%;
+
+    --muted: 150 10% 94%;
+    --muted-foreground: 160 10% 40%;
+
+    --accent: 32 90% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 150 10% 88%;
+    --input: 150 10% 88%;
+    --ring: 152 60% 40%;
+
+    --radius: 0.75rem;
+
+    /* Premium tokens */
+    --emerald: 152 60% 40%;
+    --emerald-light: 152 55% 55%;
+    --teal: 175 60% 40%;
+    --teal-light: 175 55% 55%;
+    --amber: 32 90% 55%;
+    --amber-light: 38 95% 60%;
+    --cream: 45 35% 96%;
+    --sage: 140 20% 90%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(152 60% 40%) 0%, hsl(165 55% 35%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(32 90% 55%) 0%, hsl(38 95% 60%) 100%);
+    --gradient-teal: linear-gradient(135deg, hsl(175 60% 40%) 0%, hsl(165 55% 45%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(150 20% 97%) 0%, hsl(0 0% 100%) 100%);
+    --gradient-mesh: radial-gradient(at 40% 20%, hsl(152 60% 40% / 0.08) 0px, transparent 50%), radial-gradient(at 80% 80%, hsl(32 90% 55% / 0.08) 0px, transparent 50%);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(160 25% 10% / 0.08);
+    --shadow-card: 0 4px 24px -8px hsl(160 25% 10% / 0.06);
+    --shadow-elevated: 0 20px 50px -15px hsl(160 25% 10% / 0.12);
+    --shadow-glow: 0 0 40px hsl(152 60% 40% / 0.25);
+    --shadow-accent: 0 10px 30px hsl(32 90% 55% / 0.3);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 160 25% 25%;
+    --sidebar-primary: 152 60% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 150 15% 94%;
+    --sidebar-accent-foreground: 160 25% 10%;
+    --sidebar-border: 150 10% 88%;
+    --sidebar-ring: 152 60% 40%;
+  }
+
+  .dark {
+    --background: 160 20% 8%;
+    --foreground: 150 10% 95%;
+
+    --card: 160 20% 12%;
+    --card-foreground: 150 10% 95%;
+
+    --popover: 160 20% 12%;
+    --popover-foreground: 150 10% 95%;
+
+    --primary: 152 55% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 160 15% 18%;
+    --secondary-foreground: 150 10% 95%;
+
+    --muted: 160 15% 18%;
+    --muted-foreground: 150 10% 55%;
+
+    --accent: 32 85% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 15% 18%;
+    --input: 160 15% 18%;
+    --ring: 152 55% 50%;
+
+    --sidebar-background: 160 20% 10%;
+    --sidebar-foreground: 150 10% 95%;
+    --sidebar-primary: 152 55% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 15% 15%;
+    --sidebar-accent-foreground: 150 10% 95%;
+    --sidebar-border: 160 15% 18%;
+    --sidebar-ring: 152 55% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Custom cursor (see CustomCursor.tsx): hide system cursor on fine pointers */
+  @media (pointer: fine) {
+    html.custom-cursor-active body,
+    html.custom-cursor-active body a,
+    html.custom-cursor-active body button {
+      cursor: none !important;
+    }
+    html.custom-cursor-active input,
+    html.custom-cursor-active textarea {
+      cursor: text !important;
+    }
+
+    @keyframes cursor-ring-pulse {
+      0%,
+      100% {
+        box-shadow:
+          0 0 24px hsl(var(--primary) / 0.45),
+          0 0 2px hsl(var(--primary) / 0.5);
+      }
+      50% {
+        box-shadow:
+          0 0 36px hsl(var(--primary) / 0.65),
+          0 0 4px hsl(var(--primary) / 0.55);
+      }
+    }
+
+    @keyframes cursor-ring-pulse-hover {
+      0%,
+      100% {
+        box-shadow: 0 0 36px hsl(var(--accent) / 0.45);
+      }
+      50% {
+        box-shadow: 0 0 48px hsl(var(--accent) / 0.7);
+      }
+    }
+
+    html.custom-cursor-active [data-cursor-ring][data-hover="false"] {
+      animation: cursor-ring-pulse 2.2s ease-in-out infinite;
+    }
+
+    html.custom-cursor-active [data-cursor-ring][data-hover="true"] {
+      animation: cursor-ring-pulse-hover 0.9s ease-in-out infinite;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', sans-serif;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .gradient-text-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-accent);
+  }
+
+  .gradient-bg {
+    background-image: var(--gradient-primary);
+  }
+
+  .gradient-accent {
+    background-image: var(--gradient-accent);
+  }
+
+  .gradient-teal {
+    background-image: var(--gradient-teal);
+  }
+
+  .mesh-bg {
+    background-image: var(--gradient-mesh);
+  }
+
+  .card-elevated {
+    @apply bg-card rounded-2xl border border-border;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-4px);
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28 px-4 md:px-8;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 md:px-6;
+  }
+
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Premium emerald section */
+  .bg-emerald {
+    background-color: hsl(var(--emerald));
+  }
+
+  .bg-emerald-light {
+    background-color: hsl(var(--emerald-light));
+  }
+
+  .bg-teal {
+    background-color: hsl(var(--teal));
+  }
+
+  .bg-cream {
+    background-color: hsl(var(--cream));
+  }
+
+  .bg-sage {
+    background-color: hsl(var(--sage));
+  }
+
+  .text-emerald {
+    color: hsl(var(--emerald));
+  }
+
+  .text-amber {
+    color: hsl(var(--amber));
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-background/80 backdrop-blur-xl border border-border/50;
+  }
+
+  /* Stat styling */
+  .stat-number {
+    @apply text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+    font-family: 'Sora', sans-serif;
+  }
+
+  /* Split layout for forms */
+  .split-emerald {
+    background: linear-gradient(to right, hsl(var(--emerald)) 0%, hsl(var(--emerald)) 40%, hsl(var(--background)) 40%);
+  }
+  
+  @media (max-width: 1024px) {
+    .split-navy {
+      background: hsl(var(--background));
+    }
+  }
+}
+
+@layer utilities {
+  .motion-reduce\:animate-none-at-reduced {
+    @media (prefers-reduced-motion: reduce) {
+      animation: none !important;
+    }
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+
+  /* Hover underline effect */
+  .hover-underline {
+    @apply relative;
+  }
+  
+  .hover-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+  }
+  
+  .hover-underline:hover::after {
+    @apply w-full;
+  }
+
+  /* Slow zoom on hero imagery (respects reduced motion via utility below) */
+  .animate-hero-ken {
+    animation: heroKen 24s ease-out forwards;
+  }
+
+  @keyframes heroKen {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
+
+  .animate-float-slow {
+    animation: floatSlow 8s ease-in-out infinite;
+  }
+
+  @keyframes floatSlow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  .animate-shimmer-bg {
+    background-size: 200% 200%;
+    animation: shimmerBg 8s ease infinite;
+  }
+
+  @keyframes shimmerBg {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient-x {
+    background-size: 200% auto;
+    animation: gradientX 5s ease infinite;
+  }
+
+  @keyframes gradientX {
+    0%,
+    100% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+  }
+}
